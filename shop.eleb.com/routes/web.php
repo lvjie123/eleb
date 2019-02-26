@@ -25,5 +25,5 @@ Route::post('login','LoginController@store')->name('login');
 Route::get('logout','LoginController@destroy')->name('logout');
 Route::resource('menu','Menu_categorieController');
 Route::resource('menus','MenuController');
-
+Route::resource('activity','ActivityController');
 

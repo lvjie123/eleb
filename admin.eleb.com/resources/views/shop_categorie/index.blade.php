@@ -13,7 +13,7 @@
         <tr>
             <td>{{ $shop_categorie->id }}</td>
             <td>{{ $shop_categorie->name }}</td>
-            <td><img src="{{ $shop_categorie->img() }}" style="width: 150px;height: 150px"></td>
+            <td><img src="{{ $shop_categorie->img }}" style="width: 150px;height: 150px"></td>
             <td>@if($shop_categorie->status==1)显示@else隐藏@endif</td>
             <td>
             <a href="{{ route('shop_categorie.edit',[$shop_categorie]) }}" class="btn btn-info">修改</a>

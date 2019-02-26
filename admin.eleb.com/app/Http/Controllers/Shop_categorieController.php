@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Shop_categorie;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class Shop_categorieController extends Controller
 {
@@ -90,6 +91,13 @@ class Shop_categorieController extends Controller
         ]);
         $request->session()->flash('success','商品修改成功');
         return redirect()->route('shop_categorie.index');
+    }
+
+    public function upload(Request $request)
+    {
+        $img = $request->file('img');
+        $path = Storage::url($img->store('public/shop_categorie'));
+        return $path;
     }
 
 }

@@ -17,17 +17,44 @@ class MenuController extends Controller
     }
 
     public function index(Request $request){
-        $kk = Menu_categorie::all();
-        $keyword = $request->keyword;
-        $user = Auth::user();
-//        dd($user);
-        if($keyword){
-            $menus = Menu::where('category_id','=',"$keyword")->where('shop_id','=',$user->shop_id)->paginate(3);
-        }else{
-            $menus =  Menu::where('shop_id','=',$user->shop_id)->paginate(3);
+//        $kk = Menu_categorie::all();
+//        $keyword = $request->keyword;
+//        $user = Auth::user();
+////        dd($user);
+//        if($keyword){
+//            $menus = Menu::where('category_id','=',"$keyword")->where('shop_id','=',$user->shop_id)->paginate(3);
+//        }else{
+//            $menus =  Menu::where('shop_id','=',$user->shop_id)->paginate(3);
+//        }
+////        dd($menus);
+//        return view('menus.index',compact('menus','kk','keyword'));
+
+
+        $rows = Menu::where('shop_id','=',Auth::user()->shop_id);
+
+        //分类
+        if($request->keyword){
+            $rows->where('category_id','=',$request->keyword);
         }
-//        dd($menus);
-        return view('menus.index',compact('menus','kk','keyword'));
+
+        //最小价格
+        if($request->start){
+            $rows->where('goods_price','>=',$request->start);
+        }
+        //最大价格
+        if($request->end){
+            $rows->where('goods_price','<=',$request->end);
+        }
+        $menus = $rows->paginate(3);
+        //菜品分类列表
+        $kk = Menu_categorie::all();
+        return view('menus.index',['menus'=>$menus,'kk'=>$kk,'keyword'=>$request->keyword,'category_id'=>$request->category_id,'start'=>$request->start,'end'=>$request->end]);
+
+
+
+
+
+
     }
 
     public function create()

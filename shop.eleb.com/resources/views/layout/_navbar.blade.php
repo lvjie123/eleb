@@ -15,8 +15,9 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="{{route('first.index')}}">首页<span class="sr-only">(current)</span></a></li>
-                <li><a href="{{ route('menu.index') }}">菜品分类</a></li>
-                <li><a href="{{ route('menus.index') }}">菜品分类</a></li>
+                <li><a href="{{ route('menu.index') }}">分类</a></li>
+                <li><a href="{{ route('menus.index') }}">菜品</a></li>
+                <li><a href="{{ route('activity.index') }}">活动</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">新增<span class="caret"></span></a>
                     <ul class="dropdown-menu">

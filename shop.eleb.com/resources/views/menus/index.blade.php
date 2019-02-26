@@ -9,6 +9,9 @@
                     <option value="{{ $k->id }}">{{ $k->name }}</option>
                 @endforeach
             </select>
+            <lable>价格搜索</lable>
+            <input type="text" class="form-control" name="start" style="width: 50px;">--
+            <input type="text" class="form-control" name="end" style="width: 50px;">
         </div>
         <button type="submit" class="btn btn-success">搜索</button>
     </form>
@@ -27,8 +30,9 @@
         @foreach($menus as $menu)
             <tr>
                 <td>{{ $menu->id }}</td>
-                <td><img src="{{ $menu->goods_img }}" alt="" style="width: 100px;height: 100px"></td>
                 <td>{{ $menu->goods_name }}</td>
+                <td><img src="{{ $menu->goods_img }}" alt="" style="width: 100px;height: 100px"></td>
+
                 <td>{{ $menu->shop->shop_name }}</td>
                 <td>{{ $menu->menu_categorie->name }}</td>
                 <td>{{ $menu->goods_price }}</td>
@@ -45,5 +49,5 @@
             </tr>
             @endforeach
     </table>
-    {{ $menus->appends(['keyword'=>$keyword])->links() }}
+    {{ $menus->appends(['keyword'=>$keyword,'start'=>$start,'end'=>$end])->links() }}
     @stop

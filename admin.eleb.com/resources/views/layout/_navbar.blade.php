@@ -19,10 +19,12 @@
                 <li><a href="{{ route('shop.index') }}">店铺详情</a></li>
                 <li><a href="{{ route('admins.index') }}">管理员</a></li>
                 <li><a href="{{ route('user.index') }}">商户详情</a></li>
+                <li><a href="{{ route('activity.index') }}">活动详情</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">新增<span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="{{route('shop_categorie.create')}}">新增分类</a></li>
+                        <li><a href="{{route('activity.create')}}">添加活动</a></li>
                     </ul>
                 </li>
             </ul>
