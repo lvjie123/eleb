@@ -30,24 +30,24 @@ class Shop_categorieController extends Controller
             [
                 'name' => 'required',
                 'status' => 'required',
-                'img'=>'required|image|max:2048'
+                'img'=>'required'
             ],
             [
                 'name.required' => '分类名称不能为空',
                 'status.required' => '状态不能为空',
                 'img.required'=>'请上传分类图片',
-                'img.image'=>'图片格式不正确',
-                'img.max'=>'图片大小不能超过2M',
+//                'img.image'=>'图片格式不正确',
+//                'img.max'=>'图片大小不能超过2M',
             ]
         );
 
-        $img = $request->file('img');
-        $path = $img->store('public/shop_categorie');
+//        $img = $request->file('img');
+//        $path = $img->store('public/shop_categorie');
 
         Shop_categorie::create([
             'name' => $request->name,
             'status' => $request->status,
-            'img'=>$path,
+            'img'=>$request->img,
         ]);
 
         $request->session()->flash('success', '商品添加成功');
@@ -66,28 +66,29 @@ class Shop_categorieController extends Controller
     }
 
     public function update(Shop_categorie $Shop_categorie,Request $request){
+//        dd($request);
         $this->validate($request,
             [
                 'name' => 'required',
                 'status' => 'required',
-                'img'=>'required|image|max:2048'
+                'img'=>'required'
             ],
             [
                 'name.required' => '分类名称不能为空',
                 'status.required' => '状态不能为空',
                 'img.required'=>'请上传分类图片',
-                'img.image'=>'图片格式不正确',
-                'img.max'=>'图片大小不能超过2M',
+//                'img.image'=>'图片格式不正确',
+//                'img.max'=>'图片大小不能超过2M',
             ]
         );
 
-        $img = $request->file('img');
-        $path = $img->store('public/shop_categorie');
+//        $img = $request->file('img');
+//        $path = $img->store('public/shop_categorie');
 
         $Shop_categorie->update([
             'name' => $request->name,
             'status' => $request->status,
-            'img'=>$path,
+            'img'=>$request->img,
         ]);
         $request->session()->flash('success','商品修改成功');
         return redirect()->route('shop_categorie.index');
@@ -95,9 +96,9 @@ class Shop_categorieController extends Controller
 
     public function upload(Request $request)
     {
-        $img = $request->file('img');
+        $img = $request->file('file');
         $path = Storage::url($img->store('public/shop_categorie'));
-        return $path;
+        return ['path'=>$path];
     }
 
 }

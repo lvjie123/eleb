@@ -28,7 +28,7 @@
     </div>
     <div class="form-group">
         <label>活动详情</label>
-        <script id="container" name="content" type="text/plain">{{ $activity->content }}</script>
+        <script id="container" name="content" type="text/plain">{!! $activity->content !!}</script>
     </div>
 
     {{ csrf_field() }}

@@ -1,14 +1,14 @@
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<link rel="stylesheet" type="text/css" href="/webuploader/webuploader.css">
-<!--引入JS-->
-<script type="text/javascript" src="/webuploader/webuploader.js"></script>
+
 @extends('layout.app')
 
 @section('contents')
 <!--表单-->
 @include('layout._errors')
 
-
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/webuploader/webuploader.css">
+<!--引入JS-->
+<script type="text/javascript" src="/webuploader/webuploader.js"></script>
 
 <form action="{{route('shop_categorie.store')}}" method="post" enctype="multipart/form-data">
     <div class="form-group">
@@ -16,9 +16,10 @@
         <input type="text" class="form-control" placeholder="请输入分类名称" name="name" value="{{ old('name') }}">
     </div>
     <div class="form-group">
+        <input type="hidden" id="haha" name="img">
+        <img src="" alt="" id="sb">
         <div id="uploader-demo">
             <!--用来存放item-->
-            <input type="hidden" id="haha" name="img">
             <div id="fileList" class="uploader-list"></div>
             <div id="filePicker">选择图片</div>
         </div>
@@ -36,8 +37,6 @@
     {{ csrf_field() }}
     <button type="submit" class="btn btn-success">提交</button>
 </form>
-@endsection
-
 <script>
     var uploader = WebUploader.create({
 
@@ -61,12 +60,17 @@
             mimeTypes: 'image/*'
         },
         formData:{
-          _token:'{{ csrf_token() }}'
+            _token:'{{ csrf_token() }}'
         }
     });
 
     // 文件上传成功，给item添加成功class, 用样式标记上传成功。
-    uploader.on( 'uploadSuccess', function( file ,fanhui) {
-        $( '#img' ).attr('src',fanhui.path)
+    uploader.on( 'uploadSuccess', function( file ,response) {
+        // console.log(response.path);
+        $( '#sb' ).attr('src',response.path).css('width','100px');
+        $('#haha').val(response.path);
     });
 </script>
+@endsection
+
+

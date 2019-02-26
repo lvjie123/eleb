@@ -68,7 +68,7 @@ class MenuController extends Controller
             'goods_price'=>'required',
             'description'=>'required',
             'tips'=>'required',
-            'goods_img'=>'required|image',
+            'img'=>'required',
             'category_id'=>'required',
         ],[
             'goods_name.required'=>'菜品名不能为空',
@@ -76,19 +76,19 @@ class MenuController extends Controller
             'description.required'=>'描述不能为空',
             'tips.required'=>'提示不能为空',
             'category_id.required'=>'分类不能为空',
-            'goods_img.required'=>'图片不能为空',
-            'goods_img.image'=>'图片上传错误',
+            'img.required'=>'图片不能为空',
+//            'goods_img.image'=>'图片上传错误',
         ]);
         $user = auth()->user();
         $menu = new Menu();
-        $img = $request->file('goods_img');
-        $path=$img->store('public/menu');
+//        $img = $request->file('goods_img');
+//        $path=$img->store('public/menu');
         $menu->goods_name = $request->goods_name;
         $menu->goods_price = $request->goods_price;
         $menu->description = $request->description;
         $menu->tips = $request->tips;
         $menu->category_id = $request->category_id;
-        $menu->goods_img = url(Storage::url($path));
+        $menu->goods_img = $request->img;
         $menu->shop_id=$user->shop_id;
         $menu->month_sales=rand(0,500);
         $menu->rating_count=rand(1,5);
@@ -118,7 +118,7 @@ class MenuController extends Controller
             'goods_price'=>'required',
             'description'=>'required',
             'tips'=>'required',
-            'goods_img'=>'required|image',
+            'img'=>'required',
             'category_id'=>'required',
         ],[
             'goods_name.required'=>'菜品名不能为空',
@@ -126,13 +126,13 @@ class MenuController extends Controller
             'description.required'=>'描述不能为空',
             'tips.required'=>'提示不能为空',
             'category_id.required'=>'分类不能为空',
-            'goods_img.required'=>'图片不能为空',
-            'goods_img.image'=>'图片上传错误',
+            'img.required'=>'图片不能为空',
+//            'goods_img.image'=>'图片上传错误',
         ]);
 
-        $img = $request->file('goods_img');
-        $path=$img->store('public/menu');
-        $aa = url(Storage::url($path));
+//        $img = $request->file('goods_img');
+//        $path=$img->store('public/menu');
+//        $aa = url(Storage::url($path));
 
 
         $menu->update([
@@ -141,10 +141,17 @@ class MenuController extends Controller
             'goods_price' => $request->goods_price,
             'description'=>$request->description,
             'tips'=>$request->tips,
-            'goods_img'=>$aa,
+            'goods_img'=>$request->img,
         ]);
 
         return redirect()->route('menus.index')->with("info","修改成功");
+    }
+
+    public function upload(Request $request)
+    {
+        $img = $request->file('file');
+        $path = Storage::url($img->store('public/menu'));
+        return ['path'=>$path];
     }
 
 }

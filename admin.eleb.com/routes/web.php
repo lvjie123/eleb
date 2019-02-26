@@ -31,7 +31,8 @@ Route::resource('admins','AdminController');
 Route::get('/user/examine/{user}','UserController@examine')->name('user.examine');
 Route::resource('user','UserController');
 Route::resource('activity','ActivityController');
-Route::post('upload','Shop_categorieController@upload')->name('upload');
+Route::post('/upload','Shop_categorieController@upload')->name('upload');
+Route::post('/upload1','ShopController@upload')->name('upload');
 
 //登录和注销
 Route::get('login','LoginController@create')->name('login');

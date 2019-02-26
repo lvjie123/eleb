@@ -1,6 +1,10 @@
 @extends('layout.app')
 @section('contents')
     @include('layout._errors')
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/webuploader/webuploader.css">
+    <!--引入JS-->
+    <script type="text/javascript" src="/webuploader/webuploader.js"></script>
     <form class="form-horizontal" method="post" enctype="multipart/form-data" action="{{ route('shop.update',[$shop]) }}">
         <div class="form-group">
             <label for="inputText3" class="col-sm-2 control-label">店铺名称</label>
@@ -19,9 +23,12 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="inputEmail3" class="col-sm-2 control-label">店铺图片</label>
-            <div class="col-sm-10">
-                <input type="file" name="shop_img">
+            <input type="hidden" id="haha" name="img">
+            <img src="" alt="" id="sb">
+            <div id="uploader-demo">
+                <!--用来存放item-->
+                <div id="fileList" class="uploader-list"></div>
+                <div id="filePicker">选择图片</div>
             </div>
         </div>
         <div class="form-group">
@@ -123,4 +130,38 @@
         <br>
         <br>
     </form>
+    <script>
+        var uploader = WebUploader.create({
+
+// 选完文件后，是否自动上传。
+            auto: true,
+
+// swf文件路径
+//         swf: BASE_URL + '/js/Uploader.swf',
+
+// 文件接收服务端。
+            server: '/upload1',
+
+// 选择文件的按钮。可选。
+// 内部根据当前运行是创建，可能是input元素，也可能是flash.
+            pick: '#filePicker',
+
+// 只允许选择图片文件。
+            accept: {
+                title: 'Images',
+                extensions: 'gif,jpg,jpeg,bmp,png',
+                mimeTypes: 'image/*'
+            },
+            formData:{
+                _token:'{{ csrf_token() }}'
+            }
+        });
+
+        // 文件上传成功，给item添加成功class, 用样式标记上传成功。
+        uploader.on( 'uploadSuccess', function( file ,response) {
+            // console.log(response.path);
+            $( '#sb' ).attr('src',response.path).css('width','100px');
+            $('#haha').val(response.path);
+        });
+    </script>
     @endsection

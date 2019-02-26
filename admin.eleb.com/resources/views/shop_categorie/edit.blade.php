@@ -1,14 +1,12 @@
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<link rel="stylesheet" type="text/css" href="/webuploader/webuploader.css">
-<!--引入JS-->
-<script type="text/javascript" src="/webuploader/webuploader.js"></script>
-
 @extends('layout.app')
 
 @section('contents')
 <!--表单-->
 @include('layout._errors')
-
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/webuploader/webuploader.css">
+<!--引入JS-->
+<script type="text/javascript" src="/webuploader/webuploader.js"></script>
 <form action="{{ route('shop_categorie.update',[$shop_categorie]) }}" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <label>分类名称</label>
@@ -16,6 +14,7 @@
     </div>
     <div class="form-group">
         <input type="hidden" id="haha" name="img">
+        <img src="" alt="" id="sb">
         <div id="uploader-demo">
             <!--用来存放item-->
             <div id="fileList" class="uploader-list"></div>
@@ -36,7 +35,6 @@
     {{ method_field('patch') }}
     <button type="submit" class="btn btn-success">提交</button>
 </form>
-@endsection
 <script>
     var uploader = WebUploader.create({
 
@@ -65,7 +63,10 @@
     });
 
     // 文件上传成功，给item添加成功class, 用样式标记上传成功。
-    uploader.on( 'uploadSuccess', function( file ,fanhui) {
-        $( '#haha' ).attr('src',fanhui.path)
+    uploader.on( 'uploadSuccess', function( file ,response) {
+        // console.log(response.path);
+        $( '#sb' ).attr('src',response.path).css('width','100px');
+        $('#haha').val(response.path);
     });
 </script>
+@endsection

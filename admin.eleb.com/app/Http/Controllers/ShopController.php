@@ -73,7 +73,7 @@ class ShopController extends Controller
                 'send_cost' => 'required|integer',
                 'notice' => 'required',
                 'discount' => 'required',
-                'shop_img'=>'required|image|max:2048'
+                'img'=>'required'
             ],
             [
                 'shop_category_id.required' => '分类不能为空',
@@ -90,14 +90,12 @@ class ShopController extends Controller
                 'send_cost.integer' => '配送费必须是整数',
                 'notice.required' => '店公告不能为空',
                 'discount.required' => '优惠信息不能为空',
-                'shop_img.required'=>'请上传店铺图片',
-                'shop_img.image'=>'图片格式不正确',
-                'shop_img.max'=>'图片大小不能超过2M',
+                'img.required'=>'请上传店铺图片',
             ]
         );
 
-        $shop_img = $request->file('shop_img');
-        $path = url(Storage::url($shop_img->store('public/shop')));
+//        $shop_img = $request->file('shop_img');
+//        $path = url(Storage::url($shop_img->store('public/shop')));
 
         $shop->update([
             'shop_category_id' => $request->shop_category_id,
@@ -112,11 +110,17 @@ class ShopController extends Controller
             'send_cost' => $request->send_cost,
             'notice' => $request->notice,
             'discount' => $request->discount,
-            'shop_img'=>$path,
+            'shop_img'=>$request->img,
             ]);
 
         $request->session()->flash('success','店铺信息修改成功');
         return redirect()->route('shop.index');
+    }
+    public function upload(Request $request)
+    {
+        $img = $request->file('file');
+        $path = Storage::url($img->store('public/shop'));
+        return ['path'=>$path];
     }
 
 

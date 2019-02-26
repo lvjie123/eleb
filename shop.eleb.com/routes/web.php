@@ -26,4 +26,7 @@ Route::get('logout','LoginController@destroy')->name('logout');
 Route::resource('menu','Menu_categorieController');
 Route::resource('menus','MenuController');
 Route::resource('activity','ActivityController');
+Route::post('/upload','MenuController@upload')->name('upload');
+Route::post('/upload2','ShopController@upload')->name('upload');
+Route::post('/upload1','MenuController@upload')->name('upload');
 
