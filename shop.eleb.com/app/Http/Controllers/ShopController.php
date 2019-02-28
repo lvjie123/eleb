@@ -129,7 +129,7 @@ class ShopController extends Controller
     public function upload(Request $request)
     {
         $img = $request->file('file');
-        $path = Storage::url($img->store('public/menu'));
+        $path = Storage::url($img->store('public/shop'));
         return ['path'=>$path];
     }
 }

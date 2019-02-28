@@ -1,4 +1,4 @@
-@include('layout._head')
+@include('layout._head2')
 
 <div class="container" style="width: 600px">
     @include('layout._notice')

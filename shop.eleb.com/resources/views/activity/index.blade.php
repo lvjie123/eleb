@@ -17,7 +17,10 @@
                 <td>{{ $activity->title }}</td>
                 <td>{{ $activity->start_time }}</td>
                 <td>{{ $activity->end_time }}</td>
-                <td>火热进行中</td>
+                <td>@if($activity->start_time>date('Y-m-d H:i:s'))未开始
+                    @elseif($activity->end_time<date('Y-m-d H:i:s'))已结束
+                    @elseif($activity->end_time>date('Y-m-d H:i:s'))在进行
+                    @endif</td>
 
                 <td>
                     <a href="{{ route('activity.show',[$activity]) }}" class="btn btn-info">查看</a>
