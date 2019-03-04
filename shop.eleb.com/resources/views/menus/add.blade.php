@@ -4,7 +4,7 @@
 <!--表单-->
 @include('layout._errors')
 
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="/webuploader/webuploader.css">
 <!--引入JS-->
 <script type="text/javascript" src="/webuploader/webuploader.js"></script>

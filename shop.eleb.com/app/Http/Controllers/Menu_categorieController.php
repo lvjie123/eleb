@@ -47,7 +47,7 @@ class Menu_categorieController extends Controller
         }
         $shop = auth()->user();
         $id = $shop->shop_id;
-        $list = range('a','z')[rand(0,25)];
+        $list = uniqid();
         $shop = new  Shop();
         $shop = $shop->find($id);
         $menuCategories = new Menu_categorie();
