@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Nav;
 use App\Models\Shop_categorie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -12,6 +13,7 @@ class Shop_categorieController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware(['permission:ccc']);
     }
 
     public function index()

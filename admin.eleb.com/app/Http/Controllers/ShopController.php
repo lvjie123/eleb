@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Nav;
 use App\Models\Shop;
 use App\Models\Shop_categorie;
 use App\Models\User;
@@ -27,6 +28,22 @@ class ShopController extends Controller
     {
         if($shop->status==0){
             $shop->status = 1;
+            $a = User::where('shop_id','=',$shop->id)->first();
+            $email = $a->email;
+
+            $title = '大傻吊';
+            $content = '<p>	您已通过审核</p>';
+            try{
+                \Illuminate\Support\Facades\Mail::send('email.default',compact('title','content'),
+                    function($message) use($email){
+                        $to = $email;
+                        $message->from(env('MAIL_USERNAME'))->to($to)->subject('审核通过通知');
+                    });
+            }catch (\Exception $e) {
+//                dd($e);
+                return '邮件发送失败';
+            }
+
             $request->session()->flash('success','审核成功');
         }else{
             $shop->status = 0;
@@ -48,7 +65,7 @@ class ShopController extends Controller
 
     public function show(Shop $shop){
         $shops = Shop::all();
-        return view('shop.show',compact('shop','shops'));
+        return view('shop.show',compact('shop'));
     }
 
     public function edit(Shop $shop){

@@ -10,23 +10,32 @@
             </button>
             <a class="navbar-brand" href="#">Blog</a>
         </div>
-
+<?php $navs1=\App\Models\Nav::where('pid','=','0')->get();
+$ns1 = \App\Models\Nav::all();
+$permissions = \Spatie\Permission\Models\Permission::all();
+?>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="{{route('first.index')}}">首页<span class="sr-only">(current)</span></a></li>
-                <li><a href="{{ route('shop_categorie.index') }}">商品分类</a></li>
-                <li><a href="{{ route('shop.index') }}">店铺详情</a></li>
-                <li><a href="{{ route('admins.index') }}">管理员</a></li>
-                <li><a href="{{ route('user.index') }}">商户详情</a></li>
-                <li><a href="{{ route('activity.index') }}">活动详情</a></li>
+                @foreach($navs1 as $nav1)
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">新增<span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="{{route('shop_categorie.create')}}">新增分类</a></li>
-                        <li><a href="{{route('activity.create')}}">添加活动</a></li>
+                    @foreach($permissions as $permission)
+                    @if($nav1->permission_id==$permission->id && \Illuminate\Support\Facades\Auth::user()->can($permission->name))
+                    @if($nav1->pid == 0)
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ $nav1->name }}<span class="caret"></span></a>
+                    @endif
+                        <ul class="dropdown-menu">
+                            @foreach($ns1 as $n1)
+                                @if($n1->pid == $nav1->id)
+                                    <li><a href="{{ route("$n1->url") }}">{{ $n1->name }}</a></li>
+                                @endif
+                                @endforeach
                     </ul>
                 </li>
+                    @endif
+                    @endforeach
+                    @endforeach
             </ul>
             <form class="navbar-form navbar-left">
                 <div class="form-group">
@@ -37,7 +46,6 @@
             <ul class="nav navbar-nav navbar-right">
                 @guest
                     <li><a href="{{ route('login') }}">登录</a></li>
-                    <li><a href="{{ route('admins.create') }}">注册</a></li>
                 @endguest
                 @auth
                     <li class="dropdown">

@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use App\Models\Nav;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class AdminController extends Controller
 {
@@ -19,7 +21,8 @@ class AdminController extends Controller
 
     public function create()
     {
-        return view('admin.create');
+        $roles = Role::all();
+        return view('admin.create',['roles'=>$roles]);
     }
 
     public function store(Request $request)
@@ -28,10 +31,11 @@ class AdminController extends Controller
             'name'=>'required',
             'password'=>'required',
             'email'=>'required',
+            'role' => 'required',
         ]);
 
         //保存用户
-        Admin::create([
+        $data = Admin::create([
             'name'=>$request->name,
             'password'=>Hash::make($request->password),
             'email'=>$request->email,
@@ -40,6 +44,7 @@ class AdminController extends Controller
             //设置remember_token的值
             'remember_token' => uniqid(),
         ]);
+        $data->syncRoles($request->role);
         return redirect()->route('admins.index')->with('success','管理员添加成功');
     }
 
@@ -47,7 +52,6 @@ class AdminController extends Controller
     public function index()
     {
         $admins = Admin::all();
-
         return view('admin.index',compact('admins'));
     }
 
@@ -73,6 +77,28 @@ class AdminController extends Controller
         Auth::logout();
         return redirect()->route('login')->with('danger','密码已修改，请重新登录');
 
+    }
+
+    public function edit(Admin $admin)
+    {
+        $roles = Role::all();
+        return view('admin.editt',['admin'=>$admin,'roles'=>$roles]);
+    }
+
+    public function update(Request $request,Admin $admin)
+    {
+        $this->validate($request,
+            [
+                'role' => 'required',
+            ],
+            [
+                'role.required' => '角色不能为空',
+            ]
+        );
+        $a = Admin::find($admin->id);
+        $a->syncRoles($request->role);
+        session()->flash('success','修改角色成功');
+        return redirect()->route('admins.index');
     }
 
 }

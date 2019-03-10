@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Activity;
+use App\Models\Nav;
 use Illuminate\Http\Request;
 
 class ActivityController extends Controller
@@ -11,6 +12,7 @@ class ActivityController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware(['permission:ccc']);
     }
     public function index(Request $request)
     {
@@ -58,7 +60,7 @@ class ActivityController extends Controller
 
         ]);
 
-        $request->session()->flash('success', '商品添加成功');
+        $request->session()->flash('success', '活动添加成功');
         return redirect()->route('activity.index');
     }
 

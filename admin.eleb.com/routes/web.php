@@ -31,6 +31,7 @@ Route::resource('admins','AdminController');
 Route::get('/user/examine/{user}','UserController@examine')->name('user.examine');
 Route::resource('user','UserController');
 Route::resource('activity','ActivityController');
+
 Route::post('/upload','Shop_categorieController@upload')->name('upload');
 Route::post('/upload1','ShopController@upload')->name('upload');
 
@@ -38,6 +39,23 @@ Route::post('/upload1','ShopController@upload')->name('upload');
 Route::get('login','LoginController@create')->name('login');
 Route::post('login','LoginController@store')->name('login');
 Route::get('logout','LoginController@destroy')->name('logout');
+
+Route::resource('member','MemberController');
+Route::get('/member/examine/{id}','MemberController@examine')->name('member.examine');
+Route::get('/member/examine1/{id}','MemberController@examine1')->name('member.examine1');
+//权限
+Route::resource('permission','PermissionController');
+Route::resource('role','RoleController');
+//导航菜单管理
+Route::resource('nav','NavController');
+Route::get('/nav/editt/{id}','NavController@editt')->name('nav.editt');
+Route::post('/nav/rupdate/{id}','NavController@rupdate')->name('nav.rupdate');
+//活动
+Route::resource('event','EventController');
+Route::resource('event_prize','Event_prizeController');
+Route::resource('event_member','Event_memberController');
+Route::get('/event/opeb/{event}','EventController@open')->name('event.open');
+
 
 
 Route::get('/', function () {

@@ -1,7 +1,7 @@
 @extends('layout.app')
 @section('contents')
     @include('layout._errors')
-    <form class="form-horizontal" method="post" action="{{ route('shop.changepassword') }}">
+    <form class="form-horizontal" method="post" action="{{ route('admins.changepassword') }}">
         <div class="form-group">
             <label for="inputText3" class="col-sm-2 control-label">输入旧密码</label>
             <div class="col-sm-10">

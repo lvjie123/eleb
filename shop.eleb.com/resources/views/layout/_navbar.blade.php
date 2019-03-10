@@ -18,6 +18,16 @@
                 <li><a href="{{ route('menu.index') }}">分类</a></li>
                 <li><a href="{{ route('menus.index') }}">菜品</a></li>
                 <li><a href="{{ route('activity.index') }}">活动</a></li>
+                <li><a href="{{ route('orderlist') }}">订单</a></li>
+                <li><a href="{{ route('tongji') }}">订单统计</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">菜品统计<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ route('caipin') }}">一周菜品统计</a></li>
+                        <li><a href="{{ route('caipin1') }}">三个月菜品统计</a></li>
+                    </ul>
+                </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">新增<span class="caret"></span></a>
                     <ul class="dropdown-menu">
@@ -25,6 +35,7 @@
                         <li><a href="{{ route('menus.create') }}">新增菜品</a></li>
                     </ul>
                 </li>
+                <li><a href="{{ route('event.index') }}">抽奖</a></li>
             </ul>
             <form class="navbar-form navbar-left">
                 <div class="form-group">

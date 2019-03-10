@@ -48,6 +48,11 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if ($exception instanceof \Spatie\Permission\Exceptions\UnauthorizedException) {
+            $request->session()->flash('danger', '你没有权限访问此页面');
+            return redirect()->route('admins.index');
+        }
         return parent::render($request, $exception);
+
     }
 }

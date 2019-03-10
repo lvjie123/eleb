@@ -1,4 +1,4 @@
-@extends('layout.app')
+@extends('layout.app2')
 
 @section('contents')
     <h1>登录</h1>

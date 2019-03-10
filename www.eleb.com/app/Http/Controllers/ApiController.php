@@ -11,6 +11,7 @@ use App\Models\Order;
 use App\Models\Order_detail;
 use App\Models\Shop;
 use App\Models\shop_categorie;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -284,6 +285,35 @@ class ApiController extends Controller
                     Order_detail::create($data_goods);
                 }
             });
+            $appid = 1400189767;
+            $appkey = "821321ca2ecdfb2544e824961e2e1856";
+            $phoneNumber = Auth::user()->tel;
+            $templateId = 290652;
+            $smsSign = "腾讯云";
+            try {
+                $ssender = new SmsSingleSender($appid, $appkey);
+                $params = [];
+                $result = $ssender->sendWithParam("86", $phoneNumber, $templateId,
+                    $params, $smsSign, "", "");
+            } catch(\Exception $e) {
+                echo var_dump($e);
+            }
+
+            $user = User::where('shop_id','=',$shop_id)->first();
+            $email = $user->email;
+            $title = '大傻吊';
+            $content = '<p>	有傻逼下单啦</p>';
+            try{
+                \Illuminate\Support\Facades\Mail::send('email.default',compact('title','content'),
+                    function($message) use($email){
+                        $to = $email;
+                        $message->from(env('MAIL_USERNAME'))->to($to)->subject('下单通知');
+                    });
+            }catch (\Exception $e) {
+//                dd($e);
+                return '邮件发送失败';
+            }
+
             $addorder = ["status"=> "true",
                 "message"=> "添加成功",
                 "order_id"=>$order_id];

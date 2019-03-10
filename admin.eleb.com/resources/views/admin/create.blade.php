@@ -16,7 +16,17 @@
             <label>邮箱</label>
             <input type="text" name="email" class="form-control" value="{{ old('email') }}">
         </div>
-
+        <div class="form-group">
+            <label>角色选择</label>
+            <div class="checkbox">
+                @foreach($roles as $role)
+                    <label>
+                        <input type="checkbox" value="{{ $role->name }}" name="role[]" >
+                        {{ $role->name }}
+                    </label>
+                @endforeach
+            </div>
+        </div>
         {{ csrf_field() }}
         <button type="submit" class="btn btn-primary">提交</button>
     </form>
